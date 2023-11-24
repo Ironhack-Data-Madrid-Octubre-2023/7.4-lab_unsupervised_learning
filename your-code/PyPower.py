@@ -72,3 +72,45 @@ def check_nan(df: pd.DataFrame) -> None:
             
     displayhook(f'N nan cols: {len(nan_cols)}')
     displayhook(nan_cols)
+
+    # Crear subgráficos
+
+def boxplots(rows, cols, size_x, size_y, df):
+
+    fig, axes = plt.subplots(nrows=rows, ncols=cols, figsize=(size_x, size_y))
+
+    # Aplanar la matriz de subgráficos
+    axes = axes.flatten()
+
+    # Iterar sobre las columnas y trazar boxplots
+    for i, col in enumerate(df.columns):
+        sns.boxplot(x=df[col], ax=axes[i])
+        axes[i].set_title(f'Boxplot de {col}')
+        axes[i].set_xticklabels(axes[i].get_xticklabels(), rotation=30)
+
+    # Ajustar el diseño
+    plt.tight_layout()
+    plt.show()
+
+def scaterplots_models(rows, cols, size_x, size_y, X, y, colors, cmap, name_X, name_y, titles):
+    # Crear dos subgráficos
+    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(12, 6))
+
+    # Subgráfico para 'labels'
+    scatter_labels = axes[0].scatter(X, y, c=colors[0], cmap=cmap)
+    axes[0].set_title(titles[0])
+    axes[0].set_xlabel(name_X)
+    axes[0].set_ylabel(name_y)
+
+    # Subgráfico para 'labels_DBSCAN'
+    scatter_dbscan = axes[1].scatter(X, y, c=colors[1], cmap=cmap)
+    axes[1].set_title(titles[1])
+    axes[1].set_xlabel(name_X)
+    axes[1].set_ylabel(name_y)
+
+
+    # Ajustar diseño y mostrar gráfico
+    plt.tight_layout()
+    plt.show();
+
+    
